@@ -1,6 +1,6 @@
 --[[
    Made By Bloom
-   Macro GUI (Blue / Light Purple / Black Theme)
+   Macro GUI (Blue / Light Purple / Black Theme) — SMALLER VERSION
    - Rounded corners, 0.5 transparency
    - Draggable panel
    - Animated UI (fade/scale in, hover bounce, pulsing gradient)
@@ -24,7 +24,7 @@ local BLUE_TXT    = Color3.fromRGB(100, 200, 255)
 local LILAC_TXT   = Color3.fromRGB(180, 150, 255)
 local PANEL_BG    = Color3.fromRGB(25, 25, 60)
 local BTN_BG      = BLACK
-local CORNER_PX   = 10
+local CORNER_PX   = 8 -- smaller corners
 
 -- === Rope target lengths ===
 local PULL_LEN    = 5
@@ -69,10 +69,10 @@ local function makeDraggable(dragFrame, handle)
     end)
 end
 
--- Button hover bounce
+-- Button hover bounce (subtle for small UI)
 local function attachHoverBounce(btn)
     local normal = btn.Size
-    local over   = UDim2.new(normal.X.Scale, normal.X.Offset, 0, normal.Y.Offset + 2)
+    local over   = UDim2.new(normal.X.Scale, normal.X.Offset, 0, normal.Y.Offset + 1)
     btn.MouseEnter:Connect(function()
         TweenService:Create(btn, TweenInfo.new(0.08, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = over}):Play()
     end)
@@ -84,7 +84,7 @@ end
 -- Gentle glow on active
 local function setGlow(btn, on)
     local uiStroke = btn:FindFirstChild("UIStroke") or Instance.new("UIStroke")
-    uiStroke.Thickness = 1.8
+    uiStroke.Thickness = 1.6
     uiStroke.Transparency = 0.1
     uiStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
     uiStroke.Parent = btn
@@ -119,9 +119,9 @@ gui.ResetOnSpawn = false
 gui.IgnoreGuiInset = true
 gui.Parent = CoreGui
 
--- Main panel
+-- Main panel (smaller)
 local panel = ui(Instance.new("Frame"), {
-    Size = UDim2.new(0, 210, 0, 160),
+    Size = UDim2.new(0, 170, 0, 136), -- was 210 x 160
     Position = UDim2.new(0, 20, 0, 20),
     BackgroundColor3 = PANEL_BG,
     BackgroundTransparency = 0.5
@@ -133,12 +133,12 @@ panel.BackgroundTransparency = 1
 panel.Visible = true
 TweenService:Create(panel, TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.5}):Play()
 
--- Padding + Layout
+-- Padding + Layout (tighter)
 ui(Instance.new("UIPadding"), {
-    PaddingTop = UDim.new(0, 8),
-    PaddingBottom = UDim.new(0, 8),
-    PaddingLeft = UDim.new(0, 10),
-    PaddingRight = UDim.new(0, 10)
+    PaddingTop = UDim.new(0, 6),
+    PaddingBottom = UDim.new(0, 6),
+    PaddingLeft = UDim.new(0, 8),
+    PaddingRight = UDim.new(0, 8)
 }, panel)
 
 ui(Instance.new("UIListLayout"), {
@@ -146,28 +146,28 @@ ui(Instance.new("UIListLayout"), {
     HorizontalAlignment = Enum.HorizontalAlignment.Center,
     VerticalAlignment = Enum.VerticalAlignment.Top,
     SortOrder = Enum.SortOrder.LayoutOrder,
-    Padding = UDim.new(0, 6)
+    Padding = UDim.new(0, 5)
 }, panel)
 
--- Title
+-- Title (smaller text/height)
 local title = ui(Instance.new("TextLabel"), {
-    Size = UDim2.new(1, -20, 0, 26),
+    Size = UDim2.new(1, -16, 0, 22), -- was 26
     BackgroundTransparency = 1,
     Text = "Made By bloom",
     Font = Enum.Font.Arcade,
-    TextSize = 24,
+    TextSize = 20, -- was 24
     TextColor3 = BLUE_TXT,
     LayoutOrder = 1
 }, panel)
 attachPulsingGradient(title)
 
--- Macro toggle
+-- Macro toggle (shorter, smaller font)
 local macroBtn = ui(Instance.new("TextButton"), {
-    Size = UDim2.new(1, -20, 0, 42),
+    Size = UDim2.new(1, -16, 0, 34), -- was 42
     BackgroundColor3 = BTN_BG,
     Text = "Throw: OFF",
     Font = Enum.Font.GothamMedium,
-    TextSize = 20,
+    TextSize = 16, -- was 20
     TextColor3 = LILAC_TXT,
     LayoutOrder = 2
 }, panel)
@@ -176,20 +176,20 @@ attachHoverBounce(macroBtn)
 
 -- Open/Close GUI (Na & Gk)
 local openBtn = ui(Instance.new("TextButton"), {
-    Size = UDim2.new(1, -20, 0, 32),
+    Size = UDim2.new(1, -16, 0, 26), -- was 32
     BackgroundColor3 = BTN_BG,
     Text = "Open GUI",
     Font = Enum.Font.Gotham,
-    TextSize = 18,
+    TextSize = 15, -- was 18
     TextColor3 = LILAC_TXT,
     LayoutOrder = 3
 }, panel)
 addCorner(openBtn)
 attachHoverBounce(openBtn)
 
--- Container (Na/Gk)
+-- Container (Na/Gk) smaller
 local inner = ui(Instance.new("Frame"), {
-    Size = UDim2.new(1, -20, 0, 70),
+    Size = UDim2.new(1, -16, 0, 60), -- was 70
     BackgroundTransparency = 1,
     LayoutOrder = 4,
     Visible = false
@@ -200,16 +200,16 @@ ui(Instance.new("UIListLayout"), {
     HorizontalAlignment = Enum.HorizontalAlignment.Center,
     VerticalAlignment = Enum.VerticalAlignment.Top,
     SortOrder = Enum.SortOrder.LayoutOrder,
-    Padding = UDim.new(0, 6)
+    Padding = UDim.new(0, 4)
 }, inner)
 
 -- Na: Inject
 local naBtn = ui(Instance.new("TextButton"), {
-    Size = UDim2.new(1, -20, 0, 30),
+    Size = UDim2.new(1, 0, 0, 26), -- was 30
     BackgroundColor3 = BTN_BG,
     Text = "Na: Inject",
     Font = Enum.Font.Gotham,
-    TextSize = 18,
+    TextSize = 15, -- was 18
     TextColor3 = LILAC_TXT,
     LayoutOrder = 1
 }, inner)
@@ -218,11 +218,11 @@ attachHoverBounce(naBtn)
 
 -- Gk: ON/OFF
 local gkBtn = ui(Instance.new("TextButton"), {
-    Size = UDim2.new(1, -20, 0, 30),
+    Size = UDim2.new(1, 0, 0, 26), -- was 30
     BackgroundColor3 = BTN_BG,
     Text = "Gk: OFF",
     Font = Enum.Font.Gotham,
-    TextSize = 18,
+    TextSize = 15, -- was 18
     TextColor3 = LILAC_TXT,
     LayoutOrder = 2
 }, inner)
@@ -286,11 +286,9 @@ end
 
 -- === GK internals (server-auth pulse using Pit.Damage) ===
 local function pulseKill(targetHum)
-    -- find server Damage part (your F-kill used this)
     local pit = workspace:FindFirstChild("Pit")
     local dmg = pit and pit:FindFirstChild("Damage")
     if not (dmg and dmg:IsA("BasePart")) then
-        -- fallback (clienty, may be ignored by server)
         pcall(function()
             targetHum.BreakJointsOnDeath = true
             targetHum.Health = 0
@@ -301,18 +299,15 @@ local function pulseKill(targetHum)
     local hrp = targetHum.Parent:FindFirstChild("HumanoidRootPart")
     if not hrp then return end
 
-    -- store & pulse
     local oldCF, oldSize = dmg.CFrame, dmg.Size
-    -- small, fast pulse to avoid lag
     dmg.CanCollide = false
     dmg.CanQuery  = false
     dmg.CanTouch  = true
     dmg.CFrame    = hrp.CFrame
     dmg.Size      = Vector3.new(24, 24, 24)
 
-    task.wait(0.06) -- quick touch window
+    task.wait(0.06)
 
-    -- bury it again (don’t weld, no physics)
     dmg.Size   = oldSize
     dmg.CFrame = CFrame.new(0, -5000, 0)
 end
@@ -347,7 +342,6 @@ local function enableGK()
     table.clear(killedDebounce)
     gkOn = true
 
-    -- watch new ropes only (no welds, no loops)
     gk_addedConn = workspace.DescendantAdded:Connect(function(inst)
         if not gkOn then return end
         if inst:IsA("RopeConstraint") then
@@ -357,7 +351,6 @@ local function enableGK()
         end
     end)
 
-    -- also check an existing rope right now (if already hooked)
     task.defer(function()
         local r = findPlayerRopeConstraint()
         if r then handleNewRope(r) end
