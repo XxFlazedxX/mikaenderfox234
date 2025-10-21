@@ -121,11 +121,12 @@ gui.Parent = CoreGui
 
 -- Main panel (smaller)
 local panel = ui(Instance.new("Frame"), {
-    Size = UDim2.new(0, 170, 0, 136), -- was 210 x 160
+    Size = UDim2.new(0, 145, 0, 115), -- smaller version (was 170 x 136)
     Position = UDim2.new(0, 20, 0, 20),
     BackgroundColor3 = PANEL_BG,
     BackgroundTransparency = 0.5
 }, gui)
+
 addCorner(panel)
 
 panel.Visible = false
